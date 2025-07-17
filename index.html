@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jon rosario</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
     <main>
-        <nav>
-            <span class="coq-keyword">match</span>
-            <span class="coq-var">page</span>
-            <span class="coq-keyword">with</span>
-            <span class="nav-links">
-                <a href="/" class="active">| home</a>
-                <a href="/about/" class="">| about</a>
-                <a href="/theater/" class="">| theater</a>
-                <a href="/assets/pdf/resume.pdf">| resume</a>
-                <a href="https://github.com/triviajon">| github</a>
-                <a href="/contact/" class="">| contact</a>
-            </span>
-            <span class="coq-keyword">end</span>.
-        </nav>
-        
+      <nav>
+        <span class="coq-keyword">match</span>
+        <span class="coq-var">page</span>
+        <span class="coq-keyword">with</span>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class="active"
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class=""
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class=""
+            >| theater</a
+          >
+          <a href="/assets/pdf/resume.pdf">| resume</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class=""
+            >| contact</a
+          >
+        </span>
+
+        <span class="coq-keyword">end</span>.
+      </nav>
+
+      
 <h1> hi. i'm jon rosario. </h1>
 <h3> about me. </h3>
 <p> i am currently a meng student at the <b>mit department of electrical engineering & computer science</b>, and i previously completed a double major in <b>mathematics</b> and <b>computer science and engineering</b> with a concentration in <b>music</b>. </p>
@@ -34,7 +60,7 @@
 <p> if you're interested in learning a bit more about me as a person, <a href="/about/">look at this page</a>.</p>
     </main>
     <footer>
-        <p>&copy; 2025 jon rosario</p>
+      <p>&copy; 2025 jon rosario</p>
     </footer>
-</body>
+  </body>
 </html>

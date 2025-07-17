@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jon rosario</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
     <main>
-        <nav>
-            <span class="coq-keyword">match</span>
-            <span class="coq-var">page</span>
-            <span class="coq-keyword">with</span>
-            <span class="nav-links">
-                <a href="/" class="">| home</a>
-                <a href="/about/" class="active">| about</a>
-                <a href="/theater/" class="">| theater</a>
-                <a href="/assets/pdf/resume.pdf">| resume</a>
-                <a href="https://github.com/triviajon">| github</a>
-                <a href="/contact/" class="">| contact</a>
-            </span>
-            <span class="coq-keyword">end</span>.
-        </nav>
-        
+      <nav>
+        <span class="coq-keyword">match</span>
+        <span class="coq-var">page</span>
+        <span class="coq-keyword">with</span>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class=""
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class="active"
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class=""
+            >| theater</a
+          >
+          <a href="/assets/pdf/resume.pdf">| resume</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class=""
+            >| contact</a
+          >
+        </span>
+
+        <span class="coq-keyword">end</span>.
+      </nav>
+
+      
 <h1> <i>more</i> about me. </h1>
 <h3> committee of math majors </h3>
 <p> i was a member of the <b>committee of math majors</b> (<a href="http://comm.mit.edu/">comm</a>).
@@ -85,7 +111,7 @@ feel to contact me if you're interested in talking about any of my interests! </
 
     </main>
     <footer>
-        <p>&copy; 2025 jon rosario</p>
+      <p>&copy; 2025 jon rosario</p>
     </footer>
-</body>
+  </body>
 </html>
