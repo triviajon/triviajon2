@@ -84,6 +84,8 @@ nav {
   gap: 1.5rem;
   height: 180px;
   border-radius: 6px;
+  border-bottom: 1px solid #ddd; /* light gray divider */
+  padding-bottom: 1rem; /* some space below content */
 }
 
 .production img {
