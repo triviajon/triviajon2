@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
     <main>
-        <nav>
-            <span class="coq-keyword">match</span>
-            <span class="coq-var">page</span>
-            <span class="coq-keyword">with</span>
-            <span class="nav-links">
-                <a href="/" class="{% if page.url == '/' %}active{% endif %}">| home</a>
-                <a href="/about/" class="{% if page.url == '/about/' %}active{% endif %}">| about</a>
-                <a href="/theater/" class="{% if page.url == '/theater/' %}active{% endif %}">| theater</a>
-                <a href="/assets/pdf/resume.pdf">| resume</a>
-                <a href="https://github.com/triviajon">| github</a>
-                <a href="/contact/" class="{% if page.url == '/contact/' %}active{% endif %}">| contact</a>
-            </span>
-            <span class="coq-keyword">end</span>.
-        </nav>
-        {{ content }}
+      <nav>
+        <span class="coq-keyword">match</span>
+        <span class="coq-var">page</span>
+        <span class="coq-keyword">with</span>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class="{% if page.url == '/' %}active{% endif %}"
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class="{% if page.url == '/about/' %}active{% endif %}"
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class="{% if page.url == '/theater/' %}active{% endif %}"
+            >| theater</a
+          >
+          <a href="/assets/pdf/resume.pdf">| resume</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class="{% if page.url == '/contact/' %}active{% endif %}"
+            >| contact</a
+          >
+        </span>
+
+        <span class="coq-keyword">end</span>.
+      </nav>
+
+      {{ content }}
     </main>
     <footer>
-        <p>&copy; 2025 jon rosario</p>
+      <p>&copy; 2025 jon rosario</p>
     </footer>
-</body>
+  </body>
 </html>
