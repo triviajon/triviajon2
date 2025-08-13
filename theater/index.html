@@ -50,149 +50,282 @@
 
       
 <h1>productions</h1>
-<p>below is a list of all the theatrical productions i've been involved in. you can filter by role to quickly find relevant credits.</p>
+<p>
+  below is a list of all the theatrical productions i've been involved in. you
+  can filter by role to quickly find relevant credits.
+</p>
 
 <div id="filters">
-    <button onclick="filterProductions('all')">all</button>
-    <button onclick="filterProductions('lights')">lights</button>
-    <button onclick="filterProductions('cast')">cast</button>
-    <button onclick="filterProductions('other')">other</button>
+  <button onclick="filterProductions('all')">all</button>
+  <button onclick="filterProductions('lights')">lights</button>
+  <button onclick="filterProductions('cast')">cast</button>
+  <button onclick="filterProductions('other')">other</button>
 </div>
 
 <div id="productions-grid">
-    <div class="production lights">
-      <img src="/assets/images/theater_thumbnails/gentlemans_guide.jpg" alt="A Gentleman's Guide to Love & Murder" loading="lazy">
-      <div class="production-text">
-        <div class="title">A Gentleman's Guide to Love & Murder</div>
-        <div class="year">2025</div>
-        <div class="roles">Lighting Designer, Master Electrician</div>
+  <div class="production lights">
+    <img
+      src="/assets/images/theater_thumbnails/gentlemans_guide.jpg"
+      alt="A Gentleman's Guide to Love & Murder"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">A Gentleman's Guide to Love & Murder</div>
+      <div class="meta">
+        <span class="year">2025</span>
+        <span class="org">MIT Musical Theatre Guild</span>
       </div>
+      <div class="roles">Lighting Designer, Master Electrician</div>
+      <!-- <div class="resources">
+        <a
+          href="/assets/docs/gg/GG_Lighting_Plot_All_Instruments.pdf"
+          target="_blank"
+          >Lighting Plot</a
+        >
+        <a
+          href="/assets/docs/gg/GG Lighting Schedule - Schedule.pdf"
+          target="_blank"
+          >Lighting Schedule</a
+        >
+      </div> -->
     </div>
-    <div class="production lights other">
-      <img src="/assets/images/theater_thumbnails/touch_the_sky.jpg" alt="Those Who Tried To Touch The Sky" loading="lazy">
-      <div class="production-text">
-        <div class="title">Those Who Tried To Touch The Sky</div>
-        <div class="year">2025</div>
-        <div class="roles">Master Electrician, Assistant Lighting Designer, Assistant Technical Director</div>
+  </div>
+
+  <div class="production lights other">
+    <img
+      src="/assets/images/theater_thumbnails/touch_the_sky.jpg"
+      alt="Those Who Tried To Touch The Sky"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Those Who Tried To Touch The Sky</div>
+      <div class="meta">
+        <span class="year">2025</span>
+        <span class="org">MIT Life on Stage Theatre</span>
       </div>
-    </div>
-    <div class="production lights other">
-      <img src="/assets/images/theater_thumbnails/cabaret.jpg" alt="Cabaret" loading="lazy">
-      <div class="production-text">
-        <div class="title">Cabaret</div>
-        <div class="year">2025</div>
-        <div class="roles">Lighting Designer, Producing Team</div>
-      </div>
-    </div>
-    <div class="production cast lights other">
-      <img src="/assets/images/theater_thumbnails/assassins.jpg" alt="Assassins" loading="lazy">
-      <div class="production-text">
-        <div class="title">Assassins</div>
-        <div class="year">2024</div>
-        <div class="roles">Charles J. Guiteau, Assistant Lighting Designer, Master Electrician, Carpenter</div>
-      </div>
-    </div>
-    <div class="production other">
-      <img src="/assets/images/theater_thumbnails/earnest.jpg" alt="The Importance of Being Earnest" loading="lazy">
-      <div class="production-text">
-        <div class="title">The Importance of Being Earnest</div>
-        <div class="year">2024</div>
-        <div class="roles">Carpenter</div>
-      </div>
-    </div>
-    <div class="production other">
-      <img src="/assets/images/theater_thumbnails/legally_blonde.jpg" alt="Legally Blonde" loading="lazy">
-      <div class="production-text">
-        <div class="title">Legally Blonde</div>
-        <div class="year">2024</div>
-        <div class="roles">Vocal Director</div>
-      </div>
-    </div>
-    <div class="production lights">
-      <img src="/assets/images/theater_thumbnails/lightning_thief.jpg" alt="The Lightning Thief" loading="lazy">
-      <div class="production-text">
-        <div class="title">The Lightning Thief</div>
-        <div class="year">2024</div>
-        <div class="roles">Electrician</div>
-      </div>
-    </div>
-    <div class="production cast other">
-      <img src="/assets/images/theater_thumbnails/chicago.jpg" alt="Chicago" loading="lazy">
-      <div class="production-text">
-        <div class="title">Chicago</div>
-        <div class="year">2024</div>
-        <div class="roles">Assistant Producer, Amos Hart</div>
-      </div>
-    </div>
-    <div class="production cast">
-      <img src="/assets/images/theater_thumbnails/sfb.jpg" alt="Stupid Fucking Bird" loading="lazy">
-      <div class="production-text">
-        <div class="title">Stupid Fucking Bird</div>
-        <div class="year">2023</div>
-        <div class="roles">Dev</div>
-      </div>
-    </div>
-    <div class="production cast">
-      <img src="/assets/images/theater_thumbnails/remembering_her.jpg" alt="Remembering Her" loading="lazy">
-      <div class="production-text">
-        <div class="title">Remembering Her</div>
-        <div class="year">2023</div>
-        <div class="roles">Dave</div>
-      </div>
-    </div>
-    <div class="production cast">
-      <img src="/assets/images/theater_thumbnails/heathers.jpg" alt="Heathers" loading="lazy">
-      <div class="production-text">
-        <div class="title">Heathers</div>
-        <div class="year">2023</div>
-        <div class="roles">Kurt's Dad</div>
-      </div>
-    </div>
-    <div class="production cast">
-      <img src="/assets/images/theater_thumbnails/pippin.jpg" alt="Pippin" loading="lazy">
-      <div class="production-text">
-        <div class="title">Pippin</div>
-        <div class="year">2022</div>
-        <div class="roles">Ensemble</div>
-      </div>
-    </div>
-    <div class="production other">
-      <img src="/assets/images/theater_thumbnails/timon.png" alt="Timon of Athens" loading="lazy">
-      <div class="production-text">
-        <div class="title">Timon of Athens</div>
-        <div class="year">2021</div>
-        <div class="roles">Video Editor</div>
-      </div>
-    </div>
-    <div class="production cast">
-      <img src="/assets/images/theater_thumbnails/woods.jpg" alt="Into the Woods" loading="lazy">
-      <div class="production-text">
-        <div class="title">Into the Woods</div>
-        <div class="year">2020</div>
-        <div class="roles">Mysterious Man</div>
+      <div class="roles">
+        Master Electrician, Assistant Lighting Designer, Assistant Technical
+        Director
       </div>
     </div>
   </div>
-  
+
+  <div class="production lights other">
+    <img
+      src="/assets/images/theater_thumbnails/cabaret.jpg"
+      alt="Cabaret"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Cabaret</div>
+      <div class="meta">
+        <span class="year">2025</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">Lighting Designer, Producing Team</div>
+    </div>
+  </div>
+
+  <div class="production cast lights other">
+    <img
+      src="/assets/images/theater_thumbnails/assassins.jpg"
+      alt="Assassins"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Assassins</div>
+      <div class="meta">
+        <span class="year">2024</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">
+        Cast (Charles J. Guiteau), Assistant Lighting Designer, Master
+        Electrician, Carpenter
+      </div>
+    </div>
+  </div>
+
+  <div class="production other">
+    <img
+      src="/assets/images/theater_thumbnails/earnest.jpg"
+      alt="The Importance of Being Earnest"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">The Importance of Being Earnest</div>
+      <div class="meta">
+        <span class="year">2024</span>
+        <span class="org">MIT Life on Stage Theatre</span>
+      </div>
+      <div class="roles">Carpenter</div>
+    </div>
+  </div>
+
+  <div class="production other">
+    <img
+      src="/assets/images/theater_thumbnails/legally_blonde.jpg"
+      alt="Legally Blonde"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Legally Blonde</div>
+      <div class="meta">
+        <span class="year">2024</span>
+        <span class="org">MIT Next Act</span>
+      </div>
+      <div class="roles">Vocal Director</div>
+    </div>
+  </div>
+
+  <div class="production lights">
+    <img
+      src="/assets/images/theater_thumbnails/lightning_thief.jpg"
+      alt="The Lightning Thief"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">The Lightning Thief</div>
+      <div class="meta">
+        <span class="year">2024</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">Electrician</div>
+    </div>
+  </div>
+
+  <div class="production cast other">
+    <img
+      src="/assets/images/theater_thumbnails/chicago.jpg"
+      alt="Chicago"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Chicago</div>
+      <div class="meta">
+        <span class="year">2024</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">Assistant Producer, Cast (Amos Hart)</div>
+    </div>
+  </div>
+
+  <div class="production cast">
+    <img
+      src="/assets/images/theater_thumbnails/sfb.jpg"
+      alt="Stupid Fucking Bird"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Stupid Fucking Bird</div>
+      <div class="meta">
+        <span class="year">2023</span>
+        <span class="org">MIT Life on Stage Theatre</span>
+      </div>
+      <div class="roles">Dev</div>
+    </div>
+  </div>
+
+  <div class="production cast">
+    <img
+      src="/assets/images/theater_thumbnails/remembering_her.jpg"
+      alt="Remembering Her"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Remembering Her</div>
+      <div class="meta">
+        <span class="year">2023</span>
+        <span class="org">MIT Next Act</span>
+      </div>
+      <div class="roles">Cast (Dave)</div>
+    </div>
+  </div>
+
+  <div class="production cast">
+    <img
+      src="/assets/images/theater_thumbnails/heathers.jpg"
+      alt="Heathers"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Heathers</div>
+      <div class="meta">
+        <span class="year">2023</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">Cast (Kurt's Dad)</div>
+    </div>
+  </div>
+
+  <div class="production cast">
+    <img
+      src="/assets/images/theater_thumbnails/pippin.jpg"
+      alt="Pippin"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Pippin</div>
+      <div class="meta">
+        <span class="year">2022</span>
+        <span class="org">MIT Musical Theatre Guild</span>
+      </div>
+      <div class="roles">Ensemble</div>
+    </div>
+  </div>
+
+  <div class="production other">
+    <img
+      src="/assets/images/theater_thumbnails/timon.png"
+      alt="Timon of Athens"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Timon of Athens</div>
+      <div class="meta">
+        <span class="year">2021</span>
+        <span class="org">MIT Shakespeare Ensemble</span>
+      </div>
+      <div class="roles">Video Editor</div>
+    </div>
+  </div>
+
+  <div class="production cast">
+    <img
+      src="/assets/images/theater_thumbnails/woods.jpg"
+      alt="Into the Woods"
+      loading="lazy"
+    />
+    <div class="production-text">
+      <div class="title">Into the Woods</div>
+      <div class="meta">
+        <span class="year">2020</span>
+        <span class="org">Dwight Morrow High School</span>
+      </div>
+      <div class="roles">Cast (Mysterious Man)</div>
+    </div>
+  </div>
+</div>
 
 <script>
-function filterProductions(category) {
-  const productions = document.querySelectorAll('.production');
-  productions.forEach(p => {
-    if (category === 'all' || p.classList.contains(category)) {
-      p.style.display = '';
-    } else {
-      p.style.display = 'none';
-    }
-  });
+  function filterProductions(category) {
+    const productions = document.querySelectorAll(".production");
+    productions.forEach((p) => {
+      if (category === "all" || p.classList.contains(category)) {
+        p.style.display = "";
+      } else {
+        p.style.display = "none";
+      }
+    });
 
-  document.querySelectorAll('#filters button').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  document.querySelector(`#filters button[onclick*="${category}"]`).classList.add('active');
-}
-
+    document.querySelectorAll("#filters button").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    document
+      .querySelector(`#filters button[onclick*="${category}"]`)
+      .classList.add("active");
+  }
 </script>
+
     </main>
     <footer>
       <p>&copy; 2025 jon rosario</p>
