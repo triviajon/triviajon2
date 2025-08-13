@@ -121,6 +121,33 @@ nav {
   line-height: 1.4;
 }
 
+.production-text .meta {
+  font-size: 0.95rem;
+  color: #666;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.production-text .org {
+  font-style: italic;
+}
+
+.production-text .resources {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.production-text .resources a {
+  color: #941352;
+  margin-right: 0.75rem;
+  text-decoration: none;
+}
+
+.production-text .resources a:hover {
+  text-decoration: underline;
+}
+
 #filters {
   display: flex;
   gap: 1rem;
