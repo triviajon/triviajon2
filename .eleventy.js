@@ -4,7 +4,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "assets/images/favicon": "/" });
 
   return {
-    pathPrefix: "/triviajon2/",
+    pathPrefix:
+      process.env.ELEVENTY_ENV === "production" ? "/triviajon2/" : "/",
     dir: {
       input: "./pages",
       output: "./_site",
