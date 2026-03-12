@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/assets/css/style.css" />
+    {% if page.url contains '/thoughtdumps/' %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+    <link rel="stylesheet" href="/assets/css/prism.css" />
+    {% endif %}
   </head>
   <body>
     <main>
@@ -35,6 +39,11 @@
             href="/theater/"
             class="{% if page.url == '/theater/' %}active{% endif %}"
             >| theater</a
+          >
+          <a
+            href="/thoughtdumps/"
+            class="{% if page.url contains '/thoughtdumps/' %}active{% endif %}"
+            >| thoughtdumps</a
           >
           <a href="/assets/pdf/Jon_Rosario_CV.pdf">| resume</a>
           <a href="https://github.com/triviajon">| github</a>
