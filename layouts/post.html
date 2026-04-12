@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+<article class="post">
+  <header class="post-header">
+    <h1>{{ title }}</h1>
+    <div class="post-meta">
+      <time>{{ date | postDate }}</time>
+      <span class="post-meta-sep">&middot;</span>
+      <span>{{ content | readTime }} min read</span>
+    </div>
+    {% if tags %}
+    <div class="post-tags">
+      {% for tag in tags %}
+        {% unless tag == "thoughtdumps" %}
+        <a href="/thoughtdumps/tags/{{ tag }}/" class="tag">{{ tag }}</a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <nav class="post-nav">
+    {% assign allPosts = collections.thoughtdumps %}
+    {% assign currentIndex = -1 %}
+    {% for p in allPosts %}
+      {% if p.url == page.url %}
+        {% assign currentIndex = forloop.index0 %}
+      {% endif %}
+    {% endfor %}
+    {% if currentIndex > 0 %}
+      {% assign newerIdx = currentIndex | minus: 1 %}
+      <a href="{{ allPosts[newerIdx].url }}" class="post-nav-link post-nav-newer">&larr; {{ allPosts[newerIdx].data.title }}</a>
+    {% endif %}
+    {% assign lastIdx = allPosts.size | minus: 1 %}
+    {% if currentIndex >= 0 and currentIndex < lastIdx %}
+      {% assign olderIdx = currentIndex | plus: 1 %}
+      <a href="{{ allPosts[olderIdx].url }}" class="post-nav-link post-nav-older">{{ allPosts[olderIdx].data.title }} &rarr;</a>
+    {% endif %}
+  </nav>
+</article>
