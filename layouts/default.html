@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,16 +6,21 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/assets/css/style.css" />
     {% if page.url contains '/thoughtdumps/' %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+    />
     <link rel="stylesheet" href="/assets/css/prism.css" />
     {% endif %}
   </head>
   <body>
     <main>
       <nav>
-        <span class="coq-keyword">match</span>
-        <span class="coq-var">page</span>
-        <span class="coq-keyword">with</span>
+        <div>
+          <span class="coq-keyword">match</span>
+          <span class="coq-var">page</span>
+          <span class="coq-keyword">with</span>
+        </div>
 
         <!-- Hidden checkbox toggle -->
         <input type="checkbox" id="nav-toggle" class="nav-toggle" />
@@ -54,7 +59,7 @@
           >
         </span>
 
-        <span class="coq-keyword">end</span>.
+        <div><span class="coq-keyword">end</span>.</div>
       </nav>
 
       {{ content }}
