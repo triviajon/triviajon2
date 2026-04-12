@@ -1,46 +1,15 @@
 ---
 title: hello world
-date: 2026-03-12
+date: 2026-03-20
 tags: [meta]
-description: another hello world
+description: just another blog
 ---
 
-this is the first thoughtdump. if you're reading this, the blog works!
+here's my problem: i think too much sometimes. moreover, i love to obsess over random topics for long periods of time. it's part of what makes me a (relatively) good problem solver! 
 
-## some formatting
+but most of the times, i'm thinking about things that are very silly and useless, but still would like to share them with the world. so, i decided to start a blog--*thoughtdumps*--because:
+- i will take the liberty to talk about whatever comes to mind,
+- probabilistically, my thoughts aren't worth much *to you*, but  
+- like the old adage, one's trash can be another's treasure.
 
-here's **bold**, *italic*, and a [link](https://github.com/triviajon). and a list:
-
-- item one
-- item two
-- item three
-
-## math
-
-inline math: the quadratic formula is $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
-
-display math:
-
-$$\int_0^\infty e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}$$
-
-## code
-
-```python
-def greet(name):
-    return f"hello, {name}!"
-```
-
-and here's some mengine:
-
-```mengine
-Definition id (x : Prop) : Prop := x.
-
-Theorem id_refl : forall (A : Prop), A -> A.
-Proof.
-  intro A.
-  intro H.
-  exact H.
-Admitted.
-```
-
-that's it for now.
+so take whatever ideas you want, and enjoy! i will likely write about things i learn at work as a software engineer, music, theater and life.
