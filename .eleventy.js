@@ -41,6 +41,7 @@ export default function (eleventyConfig) {
   // Date formatting
   eleventyConfig.addFilter("postDate", (date) =>
     new Date(date).toLocaleDateString("en-US", {
+      timeZone: "UTC",
       year: "numeric",
       month: "long",
       day: "numeric",
