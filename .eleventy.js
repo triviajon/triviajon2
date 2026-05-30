@@ -29,6 +29,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("thoughtdumps", (collectionApi) =>
     collectionApi
       .getFilteredByGlob("./pages/thoughtdumps/posts/*.md")
+      .filter((post) => !post.data.draft)
       .sort((a, b) => b.date - a.date)
   );
 

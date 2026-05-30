@@ -3,6 +3,8 @@ title: so, you're building a type checker
 date: 2026-05-31
 tags: []
 description: an overview of a cool data structure i implemented for mengine
+draft: true
+eleventyExcludeFromCollections: true
 ---
 
 Say you're writing a compiler, or interpreter, or *anything* that needs to type check code. How do you know that it's legal to declare a variable at a particular point in the program?
