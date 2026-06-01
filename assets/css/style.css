@@ -390,6 +390,39 @@ a.tag:hover {
   padding: 0;
 }
 
+.post-content .footnotes-sep {
+  display: none;
+}
+
+.post-content .footnotes {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #666;
+  text-align: left;
+}
+
+.post-content .footnotes-list {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.post-content .footnote-item {
+  margin-bottom: 0.4rem;
+}
+
+.post-content .footnote-item p {
+  margin: 0;
+}
+
+.post-content .footnote-ref {
+  font-size: 0.75em;
+}
+
+.post-content .footnote-backref {
+  font-size: 0.9em;
+}
+
 /* Blog: prev/next nav */
 .post-nav {
   display: flex;

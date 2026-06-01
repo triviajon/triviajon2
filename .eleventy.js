@@ -1,4 +1,5 @@
 import markdownIt from "markdown-it";
+import markdownItFootnote from "markdown-it-footnote";
 import texmath from "markdown-it-texmath";
 import katex from "katex";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -18,6 +19,7 @@ export default function (eleventyConfig) {
 
   // Markdown + LaTeX
   const md = markdownIt({ html: true, linkify: true, typographer: true });
+  md.use(markdownItFootnote);
   md.use(texmath, {
     engine: katex,
     delimiters: "dollars",
