@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>thoughtdumps</title>
+    
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/prism.css" />
+    
+  </head>
+  <body>
+    <main>
+      <nav>
+        <div>
+          <span class="coq-keyword">match</span>
+          <span class="coq-var">page</span>
+          <span class="coq-keyword">with</span>
+        </div>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class=""
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class=""
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class=""
+            >| theater</a
+          >
+          <a
+            href="/thoughtdumps/"
+            class="active"
+            >| thoughtdumps</a
+          >
+          <a href="/assets/pdf/Jon_Rosario_CV.pdf">| cv</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class=""
+            >| contact</a
+          >
+        </span>
+
+        <div><span class="coq-keyword">end</span>.</div>
+      </nav>
+
+      
+<h1>thoughtdumps</h1>
+<p>essays, notes, and other brain debris.</p>
+
+
+
+<div class="post-list">
+  
+  <a href="/thoughtdumps/do-your-own-technical-writing/" class="post-item" data-tags="thoughtdumps,ai,writing">
+    <div class="post-item-header">
+      <span class="post-item-title">own your (technical) writing</span>
+      <span class="post-item-meta">
+        <time>June 1, 2026</time>
+        &middot; 2 min
+      </span>
+    </div>
+    
+    <p class="post-item-desc">the case for doing a little more writing</p>
+    
+    
+    <div class="post-item-tags">
+      
+        
+      
+        
+        <span class="tag">ai</span>
+        
+      
+        
+        <span class="tag">writing</span>
+        
+      
+    </div>
+    
+  </a>
+  
+  <a href="/thoughtdumps/hello-world/" class="post-item" data-tags="thoughtdumps,meta">
+    <div class="post-item-header">
+      <span class="post-item-title">hello world</span>
+      <span class="post-item-meta">
+        <time>March 20, 2026</time>
+        &middot; 1 min
+      </span>
+    </div>
+    
+    <p class="post-item-desc">just another blog</p>
+    
+    
+    <div class="post-item-tags">
+      
+        
+      
+        
+        <span class="tag">meta</span>
+        
+      
+    </div>
+    
+  </a>
+  
+</div>
+
+<script>
+function filterPosts(tag) {
+  document.querySelectorAll('#filters button').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === tag || (tag === 'all' && b.textContent.trim() === 'all'));
+  });
+  document.querySelectorAll('.post-item').forEach(item => {
+    if (tag === 'all') { item.style.display = ''; return; }
+    const tags = (item.dataset.tags || '').split(',');
+    item.style.display = tags.includes(tag) ? '' : 'none';
+  });
+}
+</script>
+
+    </main>
+    <footer>
+      <p>&copy; 2026 jon rosario</p>
+    </footer>
+  </body>
+</html>

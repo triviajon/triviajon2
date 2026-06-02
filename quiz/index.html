@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>the quiz</title>
+    
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    
+  </head>
+  <body>
+    <main>
+      <nav>
+        <div>
+          <span class="coq-keyword">match</span>
+          <span class="coq-var">page</span>
+          <span class="coq-keyword">with</span>
+        </div>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class=""
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class=""
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class=""
+            >| theater</a
+          >
+          <a
+            href="/thoughtdumps/"
+            class=""
+            >| thoughtdumps</a
+          >
+          <a href="/assets/pdf/Jon_Rosario_CV.pdf">| cv</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class=""
+            >| contact</a
+          >
+        </span>
+
+        <div><span class="coq-keyword">end</span>.</div>
+      </nav>
+
+      
+<style>
+  /* ── quiz page ─────────────────────────────────────── */
+  .quiz-header {
+    margin-bottom: 2rem;
+  }
+  .quiz-header h1 {
+    margin-bottom: 0.25rem;
+  }
+  .quiz-intro {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 0;
+  }
+
+  .name-row {
+    margin-bottom: 2rem;
+  }
+  .name-row label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+  }
+  .name-row input[type="text"] {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+    color: #454545;
+  }
+  .name-row input[type="text"]:focus {
+    outline: none;
+    border-color: #882b7f;
+  }
+
+  /* ── question rows ──────────────────────────────────── */
+  .q-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .q-row {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    background: #fafafa;
+  }
+  .q-row.unanswered {
+    border-color: #c0392b;
+    background: #fff5f5;
+  }
+
+  .q-text {
+    margin-bottom: 0.6rem;
+    font-size: 0.97rem;
+  }
+  .q-num {
+    color: #882b7f;
+    font-weight: bold;
+    margin-right: 0.35rem;
+    font-size: 0.85rem;
+  }
+
+  /* ── Likert radio group ─────────────────────────────── */
+  .likert-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .likert-group input[type="radio"] {
+    display: none;
+  }
+  .likert-group label {
+    cursor: pointer;
+    padding: 0.3rem 0.55rem;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #454545;
+    user-select: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .likert-group label:hover {
+    background: #f0e6ef;
+    border-color: #882b7f;
+  }
+  .likert-group input[type="radio"]:checked + label {
+    background: #882b7f;
+    border-color: #882b7f;
+    color: #fff;
+  }
+
+  /* ── submit area ────────────────────────────────────── */
+  .quiz-footer {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  #submit-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    background: #882b7f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  #submit-btn:hover {
+    background: #6a2063;
+  }
+  #submit-btn:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+  }
+  #error-msg {
+    color: #c0392b;
+    font-size: 0.9rem;
+    display: none;
+  }
+
+  @media (max-width: 540px) {
+    .likert-group label {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.4rem;
+    }
+  }
+</style>
+
+<div class="quiz-header">
+  <h1>the quiz</h1>
+  <p class="quiz-intro">
+    rate how much each statement applies to you - 1 (strongly disagree) to 5 (strongly agree).
+  </p>
+</div>
+
+<div class="name-row">
+  <label for="resp-name">your name</label>
+  <input type="text" id="resp-name" placeholder="e.g. jon" autocomplete="off" />
+</div>
+
+<div class="q-list" id="q-list">
+
+  <!-- Q1 -->
+  <div class="q-row" id="qrow-1">
+    <div class="q-text"><span class="q-num">1.</span>I am usually the smartest person in the room.</div>
+    <div class="likert-group">
+      <input type="radio" id="q1-1" name="q1" value="1"><label for="q1-1">1 - strongly disagree</label>
+      <input type="radio" id="q1-2" name="q1" value="2"><label for="q1-2">2 - disagree</label>
+      <input type="radio" id="q1-3" name="q1" value="3"><label for="q1-3">3 - neutral</label>
+      <input type="radio" id="q1-4" name="q1" value="4"><label for="q1-4">4 - agree</label>
+      <input type="radio" id="q1-5" name="q1" value="5"><label for="q1-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-row" id="qrow-2">
+    <div class="q-text"><span class="q-num">2.</span>I could win an argument even if I'm wrong.</div>
+    <div class="likert-group">
+      <input type="radio" id="q2-1" name="q2" value="1"><label for="q2-1">1 - strongly disagree</label>
+      <input type="radio" id="q2-2" name="q2" value="2"><label for="q2-2">2 - disagree</label>
+      <input type="radio" id="q2-3" name="q2" value="3"><label for="q2-3">3 - neutral</label>
+      <input type="radio" id="q2-4" name="q2" value="4"><label for="q2-4">4 - agree</label>
+      <input type="radio" id="q2-5" name="q2" value="5"><label for="q2-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-row" id="qrow-3">
+    <div class="q-text"><span class="q-num">3.</span>I think I'd be the main character in a story.</div>
+    <div class="likert-group">
+      <input type="radio" id="q3-1" name="q3" value="1"><label for="q3-1">1 - strongly disagree</label>
+      <input type="radio" id="q3-2" name="q3" value="2"><label for="q3-2">2 - disagree</label>
+      <input type="radio" id="q3-3" name="q3" value="3"><label for="q3-3">3 - neutral</label>
+      <input type="radio" id="q3-4" name="q3" value="4"><label for="q3-4">4 - agree</label>
+      <input type="radio" id="q3-5" name="q3" value="5"><label for="q3-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-row" id="qrow-4">
+    <div class="q-text"><span class="q-num">4.</span>I make decisions impulsively.</div>
+    <div class="likert-group">
+      <input type="radio" id="q4-1" name="q4" value="1"><label for="q4-1">1 - strongly disagree</label>
+      <input type="radio" id="q4-2" name="q4" value="2"><label for="q4-2">2 - disagree</label>
+      <input type="radio" id="q4-3" name="q4" value="3"><label for="q4-3">3 - neutral</label>
+      <input type="radio" id="q4-4" name="q4" value="4"><label for="q4-4">4 - agree</label>
+      <input type="radio" id="q4-5" name="q4" value="5"><label for="q4-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-row" id="qrow-5">
+    <div class="q-text"><span class="q-num">5.</span>I enjoy causing a little bit of chaos.</div>
+    <div class="likert-group">
+      <input type="radio" id="q5-1" name="q5" value="1"><label for="q5-1">1 - strongly disagree</label>
+      <input type="radio" id="q5-2" name="q5" value="2"><label for="q5-2">2 - disagree</label>
+      <input type="radio" id="q5-3" name="q5" value="3"><label for="q5-3">3 - neutral</label>
+      <input type="radio" id="q5-4" name="q5" value="4"><label for="q5-4">4 - agree</label>
+      <input type="radio" id="q5-5" name="q5" value="5"><label for="q5-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-row" id="qrow-6">
+    <div class="q-text"><span class="q-num">6.</span>I've done something "for the bit" that had real consequences.</div>
+    <div class="likert-group">
+      <input type="radio" id="q6-1" name="q6" value="1"><label for="q6-1">1 - strongly disagree</label>
+      <input type="radio" id="q6-2" name="q6" value="2"><label for="q6-2">2 - disagree</label>
+      <input type="radio" id="q6-3" name="q6" value="3"><label for="q6-3">3 - neutral</label>
+      <input type="radio" id="q6-4" name="q6" value="4"><label for="q6-4">4 - agree</label>
+      <input type="radio" id="q6-5" name="q6" value="5"><label for="q6-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-row" id="qrow-7">
+    <div class="q-text"><span class="q-num">7.</span>I would press a button labeled "DO NOT PRESS."</div>
+    <div class="likert-group">
+      <input type="radio" id="q7-1" name="q7" value="1"><label for="q7-1">1 - strongly disagree</label>
+      <input type="radio" id="q7-2" name="q7" value="2"><label for="q7-2">2 - disagree</label>
+      <input type="radio" id="q7-3" name="q7" value="3"><label for="q7-3">3 - neutral</label>
+      <input type="radio" id="q7-4" name="q7" value="4"><label for="q7-4">4 - agree</label>
+      <input type="radio" id="q7-5" name="q7" value="5"><label for="q7-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-row" id="qrow-8">
+    <div class="q-text"><span class="q-num">8.</span>I escalate situations instead of calming them.</div>
+    <div class="likert-group">
+      <input type="radio" id="q8-1" name="q8" value="1"><label for="q8-1">1 - strongly disagree</label>
+      <input type="radio" id="q8-2" name="q8" value="2"><label for="q8-2">2 - disagree</label>
+      <input type="radio" id="q8-3" name="q8" value="3"><label for="q8-3">3 - neutral</label>
+      <input type="radio" id="q8-4" name="q8" value="4"><label for="q8-4">4 - agree</label>
+      <input type="radio" id="q8-5" name="q8" value="5"><label for="q8-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-row" id="qrow-9">
+    <div class="q-text"><span class="q-num">9.</span>I would lie if it made things easier.</div>
+    <div class="likert-group">
+      <input type="radio" id="q9-1" name="q9" value="1"><label for="q9-1">1 - strongly disagree</label>
+      <input type="radio" id="q9-2" name="q9" value="2"><label for="q9-2">2 - disagree</label>
+      <input type="radio" id="q9-3" name="q9" value="3"><label for="q9-3">3 - neutral</label>
+      <input type="radio" id="q9-4" name="q9" value="4"><label for="q9-4">4 - agree</label>
+      <input type="radio" id="q9-5" name="q9" value="5"><label for="q9-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-row" id="qrow-10">
+    <div class="q-text"><span class="q-num">10.</span>I justify things if the outcome is funny.</div>
+    <div class="likert-group">
+      <input type="radio" id="q10-1" name="q10" value="1"><label for="q10-1">1 - strongly disagree</label>
+      <input type="radio" id="q10-2" name="q10" value="2"><label for="q10-2">2 - disagree</label>
+      <input type="radio" id="q10-3" name="q10" value="3"><label for="q10-3">3 - neutral</label>
+      <input type="radio" id="q10-4" name="q10" value="4"><label for="q10-4">4 - agree</label>
+      <input type="radio" id="q10-5" name="q10" value="5"><label for="q10-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-row" id="qrow-11">
+    <div class="q-text"><span class="q-num">11.</span>I feel bad after doing something wrong.</div>
+    <div class="likert-group">
+      <input type="radio" id="q11-1" name="q11" value="1"><label for="q11-1">1 - strongly disagree</label>
+      <input type="radio" id="q11-2" name="q11" value="2"><label for="q11-2">2 - disagree</label>
+      <input type="radio" id="q11-3" name="q11" value="3"><label for="q11-3">3 - neutral</label>
+      <input type="radio" id="q11-4" name="q11" value="4"><label for="q11-4">4 - agree</label>
+      <input type="radio" id="q11-5" name="q11" value="5"><label for="q11-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-row" id="qrow-12">
+    <div class="q-text"><span class="q-num">12.</span>I think intentions matter more than outcomes.</div>
+    <div class="likert-group">
+      <input type="radio" id="q12-1" name="q12" value="1"><label for="q12-1">1 - strongly disagree</label>
+      <input type="radio" id="q12-2" name="q12" value="2"><label for="q12-2">2 - disagree</label>
+      <input type="radio" id="q12-3" name="q12" value="3"><label for="q12-3">3 - neutral</label>
+      <input type="radio" id="q12-4" name="q12" value="4"><label for="q12-4">4 - agree</label>
+      <input type="radio" id="q12-5" name="q12" value="5"><label for="q12-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-row" id="qrow-13">
+    <div class="q-text"><span class="q-num">13.</span>I would snitch if it benefited me.</div>
+    <div class="likert-group">
+      <input type="radio" id="q13-1" name="q13" value="1"><label for="q13-1">1 - strongly disagree</label>
+      <input type="radio" id="q13-2" name="q13" value="2"><label for="q13-2">2 - disagree</label>
+      <input type="radio" id="q13-3" name="q13" value="3"><label for="q13-3">3 - neutral</label>
+      <input type="radio" id="q13-4" name="q13" value="4"><label for="q13-4">4 - agree</label>
+      <input type="radio" id="q13-5" name="q13" value="5"><label for="q13-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-row" id="qrow-14">
+    <div class="q-text"><span class="q-num">14.</span>I believe most rules are optional.</div>
+    <div class="likert-group">
+      <input type="radio" id="q14-1" name="q14" value="1"><label for="q14-1">1 - strongly disagree</label>
+      <input type="radio" id="q14-2" name="q14" value="2"><label for="q14-2">2 - disagree</label>
+      <input type="radio" id="q14-3" name="q14" value="3"><label for="q14-3">3 - neutral</label>
+      <input type="radio" id="q14-4" name="q14" value="4"><label for="q14-4">4 - agree</label>
+      <input type="radio" id="q14-5" name="q14" value="5"><label for="q14-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-row" id="qrow-15">
+    <div class="q-text"><span class="q-num">15.</span>I enjoy being the center of attention.</div>
+    <div class="likert-group">
+      <input type="radio" id="q15-1" name="q15" value="1"><label for="q15-1">1 - strongly disagree</label>
+      <input type="radio" id="q15-2" name="q15" value="2"><label for="q15-2">2 - disagree</label>
+      <input type="radio" id="q15-3" name="q15" value="3"><label for="q15-3">3 - neutral</label>
+      <input type="radio" id="q15-4" name="q15" value="4"><label for="q15-4">4 - agree</label>
+      <input type="radio" id="q15-5" name="q15" value="5"><label for="q15-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-row" id="qrow-16">
+    <div class="q-text"><span class="q-num">16.</span>I change how I act depending on who I'm with.</div>
+    <div class="likert-group">
+      <input type="radio" id="q16-1" name="q16" value="1"><label for="q16-1">1 - strongly disagree</label>
+      <input type="radio" id="q16-2" name="q16" value="2"><label for="q16-2">2 - disagree</label>
+      <input type="radio" id="q16-3" name="q16" value="3"><label for="q16-3">3 - neutral</label>
+      <input type="radio" id="q16-4" name="q16" value="4"><label for="q16-4">4 - agree</label>
+      <input type="radio" id="q16-5" name="q16" value="5"><label for="q16-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-row" id="qrow-17">
+    <div class="q-text"><span class="q-num">17.</span>I hold grudges longer than I should.</div>
+    <div class="likert-group">
+      <input type="radio" id="q17-1" name="q17" value="1"><label for="q17-1">1 - strongly disagree</label>
+      <input type="radio" id="q17-2" name="q17" value="2"><label for="q17-2">2 - disagree</label>
+      <input type="radio" id="q17-3" name="q17" value="3"><label for="q17-3">3 - neutral</label>
+      <input type="radio" id="q17-4" name="q17" value="4"><label for="q17-4">4 - agree</label>
+      <input type="radio" id="q17-5" name="q17" value="5"><label for="q17-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-row" id="qrow-18">
+    <div class="q-text"><span class="q-num">18.</span>I pretend not to care when I actually do.</div>
+    <div class="likert-group">
+      <input type="radio" id="q18-1" name="q18" value="1"><label for="q18-1">1 - strongly disagree</label>
+      <input type="radio" id="q18-2" name="q18" value="2"><label for="q18-2">2 - disagree</label>
+      <input type="radio" id="q18-3" name="q18" value="3"><label for="q18-3">3 - neutral</label>
+      <input type="radio" id="q18-4" name="q18" value="4"><label for="q18-4">4 - agree</label>
+      <input type="radio" id="q18-5" name="q18" value="5"><label for="q18-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-row" id="qrow-19">
+    <div class="q-text"><span class="q-num">19.</span>I would rather be feared than liked.</div>
+    <div class="likert-group">
+      <input type="radio" id="q19-1" name="q19" value="1"><label for="q19-1">1 - strongly disagree</label>
+      <input type="radio" id="q19-2" name="q19" value="2"><label for="q19-2">2 - disagree</label>
+      <input type="radio" id="q19-3" name="q19" value="3"><label for="q19-3">3 - neutral</label>
+      <input type="radio" id="q19-4" name="q19" value="4"><label for="q19-4">4 - agree</label>
+      <input type="radio" id="q19-5" name="q19" value="5"><label for="q19-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-row" id="qrow-20">
+    <div class="q-text"><span class="q-num">20.</span>I think I could manipulate people if I tried.</div>
+    <div class="likert-group">
+      <input type="radio" id="q20-1" name="q20" value="1"><label for="q20-1">1 - strongly disagree</label>
+      <input type="radio" id="q20-2" name="q20" value="2"><label for="q20-2">2 - disagree</label>
+      <input type="radio" id="q20-3" name="q20" value="3"><label for="q20-3">3 - neutral</label>
+      <input type="radio" id="q20-4" name="q20" value="4"><label for="q20-4">4 - agree</label>
+      <input type="radio" id="q20-5" name="q20" value="5"><label for="q20-5">5 - strongly agree</label>
+    </div>
+  </div>
+
+</div><!-- /#q-list -->
+
+<input type="hidden" id="pdata" value="" />
+
+<div class="quiz-footer">
+  <button id="submit-btn" onclick="toSubmit()">submit</button>
+  <span id="error-msg"></span>
+</div>
+
+<script>
+  var LS_KEY = 'quiz_state';
+
+  function saveState() {
+    var state = { name: document.getElementById('resp-name').value };
+    for (var i = 1; i <= 20; i++) {
+      var sel = document.querySelector('input[name="q' + i + '"]:checked');
+      state['q' + i] = sel ? sel.value : null;
+    }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  (function restoreState() {
+    var raw;
+    try { raw = localStorage.getItem(LS_KEY); } catch (e) {}
+    if (!raw) return;
+    var state;
+    try { state = JSON.parse(raw); } catch (e) { return; }
+    if (state.name) document.getElementById('resp-name').value = state.name;
+    for (var i = 1; i <= 20; i++) {
+      var v = state['q' + i];
+      if (v) {
+        var radio = document.getElementById('q' + i + '-' + v);
+        if (radio) radio.checked = true;
+      }
+    }
+  })();
+
+  // Persist on every change
+  document.getElementById('resp-name').addEventListener('input', saveState);
+  document.getElementById('q-list').addEventListener('change', saveState);
+
+  var ENTRY_NAME = 'entry.1941228876';
+  var ENTRIES = [
+    'entry.1948970044', // Q1
+    'entry.1407379688', // Q2
+    'entry.1017909692', // Q3
+    'entry.764071799',  // Q4
+    'entry.1494113349', // Q5
+    'entry.176528385',  // Q6
+    'entry.884612959',  // Q7
+    'entry.1984449269', // Q8
+    'entry.1410997241', // Q9
+    'entry.1628599405', // Q10
+    'entry.80721747',   // Q11
+    'entry.800895709',  // Q12
+    'entry.1580534531', // Q13
+    'entry.839868601',  // Q14
+    'entry.492140519',  // Q15
+    'entry.698718660',  // Q16
+    'entry.2101291683', // Q17
+    'entry.216864773',  // Q18
+    'entry.1882418803', // Q19
+    'entry.227416505',  // Q20
+  ];
+
+  var POST_URL =
+    'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfoQNBt-1neikXjKJ84sGhFiF4PAnz7rZeHWkkFClQ-aw6YAw/formResponse';
+
+  function toSubmit() {
+    var errorEl = document.getElementById('error-msg');
+    errorEl.style.display = 'none';
+
+    // Collect answers
+    var answers = [];
+    var missing = [];
+    for (var i = 1; i <= 20; i++) {
+      var sel = document.querySelector('input[name="q' + i + '"]:checked');
+      if (sel) {
+        answers.push(parseInt(sel.value, 10));
+      } else {
+        answers.push(null);
+        missing.push(i);
+      }
+    }
+
+    // Validate all answered
+    if (missing.length > 0) {
+      // Highlight unanswered
+      for (var j = 1; j <= 20; j++) {
+        document.getElementById('qrow-' + j).classList.remove('unanswered');
+      }
+      missing.forEach(function (n) {
+        document.getElementById('qrow-' + n).classList.add('unanswered');
+        document.getElementById('qrow-' + n).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      errorEl.textContent =
+        'please answer all questions before submitting (missing: ' +
+        missing.join(', ') +
+        ')';
+      errorEl.style.display = 'inline';
+      return;
+    }
+
+    var name = document.getElementById('resp-name').value.trim() || 'anonymous';
+
+    // Clear saved state after successful submission
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+
+    // Build form body
+    var parts = [ENTRY_NAME + '=' + encodeURIComponent(name)];
+    for (var k = 0; k < 20; k++) {
+      parts.push(ENTRIES[k] + '=' + encodeURIComponent(String(answers[k])));
+    }
+    var body = parts.join('&');
+
+    // Submit silently
+    var btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'submitting…';
+
+    fetch(POST_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body,
+    })
+      .then(function () {
+        window.location.href = '../submission/';
+      })
+      .catch(function () {
+        // no-cors swallows errors; treat as success
+        window.location.href = '../submission/';
+      });
+  }
+</script>
+
+    </main>
+    <footer>
+      <p>&copy; 2026 jon rosario</p>
+    </footer>
+  </body>
+</html>

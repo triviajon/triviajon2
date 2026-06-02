@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>own your (technical) writing</title>
+    
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/prism.css" />
+    
+  </head>
+  <body>
+    <main>
+      <nav>
+        <div>
+          <span class="coq-keyword">match</span>
+          <span class="coq-var">page</span>
+          <span class="coq-keyword">with</span>
+        </div>
+
+        <!-- Hidden checkbox toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+
+        <!-- Coq-style "?page" toggle label -->
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span class="coq-var"> ☰ ... </span>
+        </label>
+
+        <!-- Nav links -->
+        <span class="nav-links">
+          <a href="/" class=""
+            >| home</a
+          >
+          <a
+            href="/about/"
+            class=""
+            >| about</a
+          >
+          <a
+            href="/theater/"
+            class=""
+            >| theater</a
+          >
+          <a
+            href="/thoughtdumps/"
+            class="active"
+            >| thoughtdumps</a
+          >
+          <a href="/assets/pdf/Jon_Rosario_CV.pdf">| cv</a>
+          <a href="https://github.com/triviajon">| github</a>
+          <a
+            href="/contact/"
+            class=""
+            >| contact</a
+          >
+        </span>
+
+        <div><span class="coq-keyword">end</span>.</div>
+      </nav>
+
+      
+<article class="post">
+  <header class="post-header">
+    <h1>own your (technical) writing</h1>
+    <div class="post-meta">
+      <time>June 1, 2026</time>
+      <span class="post-meta-sep">&middot;</span>
+      <span>2 min read</span>
+    </div>
+    
+    <div class="post-tags">
+      
+        
+      
+        
+        <a href="/thoughtdumps/tags/ai/" class="tag">ai</a>
+        
+      
+        
+        <a href="/thoughtdumps/tags/writing/" class="tag">writing</a>
+        
+      
+    </div>
+    
+  </header>
+
+  <div class="post-content">
+    <p>I beg: do your own technical writing. If you need to summarize a conversation, or transfer a context from one agent to another, or something else, using AI makes sense. But if your target audience is humans, like in a pull request, or a user guide, or public documentation<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, don’t force someone else to read the output of AI.</p>
+<h2>Why It Matters</h2>
+<ul>
+<li>You establish that you have actual understanding of what you’re writing about</li>
+<li>You can write for the intended audience, avoiding overexplaining or skipping important details</li>
+<li>You can preemptively answer the same questions readers will have</li>
+<li>Your audience gains trust in you as an individual</li>
+</ul>
+<p>Each of these comes from the same place: the act of explaining something to a reader is how you learn what the reader needs. That understanding is a byproduct of doing it, not something you can easily receive pre-made.</p>
+<h2>Especially Pull Requests</h2>
+<p>Especially for pull requests, where the main goal is to evaluate if the description (intent) matches the implementation (impact) – it’s important that the intent is well written and correctly conveys what compelled the author to make the pull request in the first place and why they would want this. AI often blurs the line between intent and impact to the point where it simply regurgitates the changes made, making it harder for humans.</p>
+<p>While you might save a few minutes by asking Claude to draft an entire pull request, those savings are then immediately spent by your fellow reviewers who then need to read a blob of text that is often overly verbose, strongly imperative<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>, and sometimes repetitive.</p>
+<h2>One Small Change</h2>
+<p>If there’s any change to your workflow, it’s that you start at least drafting your own technical writing, and then let AI tooling fix your grammar. The understanding underlining the words written should be your own.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>I am not making any claims about the future – it could be the case that in 3 years from now, all pull requests and public documentation are intended to be consumed by only LLMs, and user guides are considered obsolete in favor of <a href="http://AGENTS.md">AGENTS.md</a>. But that’s not today. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>i.e., simply restating what was changed instead of what the intent was <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <nav class="post-nav">
+    
+    
+    
+      
+        
+      
+    
+      
+    
+    
+    
+    
+      
+      <a href="/thoughtdumps/hello-world/" class="post-nav-link post-nav-older">hello world &rarr;</a>
+    
+  </nav>
+</article>
+
+    </main>
+    <footer>
+      <p>&copy; 2026 jon rosario</p>
+    </footer>
+  </body>
+</html>
