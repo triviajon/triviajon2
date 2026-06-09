@@ -118,34 +118,35 @@ type Table(db: Database);
         // maybe you want to do some operations on logs...
     }
 }</code></pre>
-<p>How do you know that you can actually declare <code>users</code> and <code>logs</code> where they appear? How do we know that we can’t make a reference to <code>users</code> while declaring <code>logs</code>? Or, uh, how does Claude know not to make a reference to <code>users</code> there?</p>
+<p>How do you know that you can actually declare <code>users</code> and <code>logs</code> where they appear? How do we know that we can’t make a reference to <code>users</code> while declaring <code>logs</code>?</p>
 <img src="/assets/images/thoughtdumps/type-checker/nested-scope-diagram.png" alt="Nested lifetime diagram showing prodDb around users and logs, and an invalid reference between users and logs." width="620">
-<p>Here’s a <s>terrible</s> homemade diagram indicating the <em>lifetimes</em> of each variable. Once <code>prodDb</code> is declared, it stays available until the surrounding block closes. <code>users</code> and <code>logs</code> each get their own shorter lifetime inside that region, so both can mention <code>prodDb</code>, but neither can see sideways into the other.</p>
-<p>It feels fairly intuitive to you programmer nerds, but how would you actually implement this? Moreover, typecheckers need to do these sorts of checks thousands to millions of times per program, so how would you implement this <em>efficiently</em>?</p>
-<h2>solution 0: brute force!</h2>
-<p>Everyone’s favorite? Well, here’s how we might apply it here:</p>
+<p>The diagram is drawing <strong>lifetimes</strong>, not just curly braces. Once <code>prodDb</code> is declared, it stays available until the surrounding block closes. <code>users</code> and <code>logs</code> each get their own shorter lifetime inside that region, so both can mention <code>prodDb</code>, but neither can see sideways into the other.</p>
+<p>It feels fairly obvious to us, but how would you actually implement this? Moreover, typecheckers need to do these sorts of checks thousands to millions of times per program, so how do we make this efficient?</p>
+<h2>solution 0: everyone’s favorite?</h2>
+<p>Brute force! Here’s how we apply it here:</p>
 <ul>
-<li>if we’re <em>defining</em> the variable <code>users: Table(prodDb)</code>, we just need to check that the type <code>Table(prodDb)</code> is well-<em>defined</em> where <code>users</code> is <em>defined</em>.</li>
-<li>how do we know that <code>Table(prodDb)</code> is well-<em>defined</em>? We need to check that the type constructor <code>Table</code> is <em>defined</em> there, and that its arguments (just <code>prodDb</code> in this case) are there too.</li>
-<li>finally, if we “climb” outward through the surrounding regions, we can see that <code>prodDb</code> was <em>defined</em> earlier, and <code>Table</code> was <em>defined</em> as well.</li>
+<li>if we’re defining the variable <code>users: Table(prodDb)</code>, we just need to check that the type <code>Table(prodDb)</code> is well-defined where <code>users</code> is declared.</li>
+<li>how do we know that <code>Table(prodDb)</code> is well-defined? We need to check that the type constructor <code>Table</code> is available there, and that its arguments (just <code>prodDb</code> in this case) are available there too.</li>
+<li>finally, if we “climb” outward through the surrounding regions, we can see that <code>prodDb</code> was declared earlier, and <code>Table</code> was declared as well.</li>
 </ul>
-<p>…ugh, how many times did I type “defined”? And we do this dance every single time we define a new variable, constructor, or type… there has to be a better way!</p>
+<img src="/assets/images/thoughtdumps/type-checker/climbing-scopes-check.png" alt="Lifetime tree showing a check climbing outward from users to find Table and prodDb." width="360">
+<p>Ugh, how many times did I type “defined”? And we do this dance every single time we define a new variable, constructor, or type. There has to be a better way.</p>
 <h2>the Boston Public Library</h2>
 <p>The other day, I received an invitation to two of my friends’ weddings. I’m really excited for them! They’re getting married at the Boston Public Library, a truly beautiful place of history. Naturally, because I am a very normal person, this made me think about data structures instead of, maybe, finding a date for the wedding.</p>
-<p>But anyway, imagine you’re standing in a library – not a small one, but a very vast cathedral of books, with shelves stretching out in every direction imaginable. You’re approached by a librarian, who has a very peculiar request for you.</p>
+<p>But anyway, imagine you’re standing in a library - not a small one, but a vast cathedral of books, with shelves stretching out in every direction imaginable. You’re approached by a librarian, who has a very peculiar request.</p>
 <p>“see this shelf?” she gestures at an enormous, empty shelf running the length of the room.</p>
 <p>“…yeah?”</p>
 <p>“well. I need you to fill it with books for me.”</p>
 <p>“…okay?”</p>
 <p>“the books will arrive one at a time. When a book arrives, I’ll tell you where to place it relative to a book that’s already on the shelf – to the right of this one, to the left of that one. You figure out exactly where it goes.”</p>
-<p>You nod.</p>
+<p>You nod slowly.</p>
 <p>“sometimes a book will be removed. When that happens, take it off the shelf. You can burn it, or set it aside in a pile. I don’t care.”</p>
 <p>“and?”</p>
 <p>“and at any moment, I might ask you about two books: which one comes first?”</p>
 <p>You stare at the shelf. It stretches into the distance, much longer than you could ever need. <em>why is it so big?</em>, you wonder. She hasn’t told you how many books are coming. Maybe ten, maybe ten million. But the shelf – the shelf has room for all of them, and then some.</p>
 <p>You don’t know it yet, but that’s going to matter.</p>
 <img src="/assets/images/thoughtdumps/type-checker/wide-library-shelf.png" alt="A long library shelf with a few widely spaced books and a small overwhelmed figure." width="720">
-<p>You nod. Slowly.</p>
+<p>You nod slowly.</p>
 <h2>order-maintenance problem</h2>
 <p>So, why the detour? It turns out the librarian’s shelf and our type checker are secretly the same problem. Stick with the shelf analogy for a second.</p>
 <p>Every book on that shelf has a place: given any two of them, one sits to the left of the other. That defines a <em>total order</em>, and keeping one alive while books come and go is exactly the <strong>order-maintenance problem</strong>. Formally, it asks us to maintain a totally ordered set (for every <code>x != y</code>, either <code>x &lt; y</code> or <code>y &lt; x</code>) supporting three operations:</p>
@@ -157,10 +158,10 @@ type Table(db: Database);
 <p>Now, how could we actually implement this?</p>
 <p>The simplest solution is to use a linked list. To be fair, let’s assume every operation is handed direct handles to the relevant nodes, so inserting <code>X</code> after <code>Y</code> and deleting <code>X</code> are both O(1). The problem is <code>order(X, Y)</code>: even with handles, the list does not tell us which node comes first. We still have to walk from one node until we either find the other one or hit the end. That’s O(n), and <code>order</code> is exactly the query our type checker wants to ask over and over and over. Can we do better?</p>
 <img src="/assets/images/thoughtdumps/type-checker/linked-list-order.png" alt="Linked list from A to E with a small figure walking node by node to answer an order query." width="520">
-<p>Well, yes! In 1987, <a href="https://doi.org/10.1145/28395.28434">Dietz and Sleator</a> gave a solution to this problem. Then in 2002, <a href="https://doi.org/10.1007/3-540-45749-6_17">Bender et al.</a> gave the world an <em>elegant</em> one called the <em>tag-range relabeling algorithm</em>.</p>
+<p>Well, yes! In 1988, Dietz and Sleator gave a solution to this problem. Then in 2002, Bender et al. gave the world an <em>elegant</em> one called the <em>tag-range relabeling algorithm</em>.</p>
 <p>The whole reason <code>order</code> was slow is that we had to walk the list to find where <code>X</code> and <code>Y</code> sit. So what if we just remembered? Bender et al. suggest that instead of storing elements in a linked list and walking it, we <strong>assign a number to each element</strong>. These numbers – let’s call them <em>tags</em> – are just <code>uint64_t</code>s that encode position: if <code>X.tag &lt; Y.tag</code>, then <code>X</code> comes before <code>Y</code>.</p>
 <p>So how do we hand out these tags?</p>
-<p>Remember the librarian’s shelf? It was <em>enormous</em>. Far bigger than she could ever need. That wasn’t a throwaway detail. The shelf is so big because we’re going to map it onto the range of a <code>uint64_t</code>, which gives us <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">64</span></span></span></span></span></span></span></span></span></span></span></span></eq> slots to work with. When the very first book arrives, we plop it down somewhere in the middle of that range. When the second book arrives – say, immediately after the first – we give it a tag between the first book’s tag and the end of the range. When the third book arrives between them, we give it a tag between <em>those</em> two. And so on.</p>
+<p>Remember the librarian’s shelf? It was <em>enormous</em>. Far bigger than she could ever need. That wasn’t a throwaway detail. The shelf is so big because we’re going to map it onto the range of a <code>uint64_t</code>, which gives us <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">64</span></span></span></span></span></span></span></span></span></span></span></span></eq> slots to work with. When the very first book arrives, we plop it down somewhere in the middle of that range. When the second book arrives – say, immediately after the first – we give it a tag halfway between the first book’s tag and the end of the range. When the third book arrives between them, we give it a tag halfway between <em>those</em> two. And so on.</p>
 <img src="/assets/images/thoughtdumps/type-checker/tag-midpoint-number-line.png" alt="Number line from zero to two to the sixty fourth with books placed at spaced tag values and a new book assigned a midpoint." width="620">
 <p>Most of the time, this ends up working beautifully. You have a gap, you take the midpoint, you’re done. O(1).</p>
 <p>But friends, nothing lasts forever. Eventually, you’re going to <em>locally</em> run out of room. Some unlucky region of the shelf will have books packed tightly enough that there’s no room between them. The gap is <code>0</code>, and you can’t fit a new tag in there. <em>Now</em> what?</p>
@@ -200,9 +201,9 @@ type Table(db: Database);
 </table>
 <p>So tag-range relabeling is not magically better at everything. We spend a little more on insertion, but in exchange, <code>order</code>, the one we’re going to call millions of times, goes from O(n) to essentially free.</p>
 <h2>back to the type checker</h2>
-<p>Now let’s collect what we have. We’ve solved the librarian’s problem: we can maintain a totally ordered sequence with cheap inserts, deletes, and order queries. But our type checker isn’t asking about a totally ordered sequence… it’s asking whether one declaration is still alive when another declaration is being checked. How do we get from one to the other?</p>
+<p>Now let’s collect what we have. We’ve solved the librarian’s problem: we can maintain a totally ordered sequence with cheap inserts, deletes, and order queries. But our type checker isn’t asking about a totally ordered sequence – it’s asking whether one declaration is still alive when another declaration is being checked. How do we get from one to the other?</p>
 <p>Order-maintenance lives on a line. Declaration lifetimes form a forest: <code>prodDb</code> starts before <code>users</code>, lasts through both inner blocks, and ends only when the outer block ends. <code>users</code> and <code>logs</code> are shorter sibling lifetimes inside it. So at first glance, the librarian can’t help us – she only knows how to keep books in a row, and we’ve got branches. But watch how a forest secretly <em>is</em> two lines.</p>
-<p>We’ll walk this lifetime forest with DFS, and then keep track of the pre-ordering and post-ordering by recording when we first enter a declaration’s lifetime, and when we leave it, giving us two different orderings. Here’s our original example again, annotated by lifetime rather than syntax:</p>
+<p>We’ll walk this lifetime forest with DFS, and then keep track of the pre-ordering and post-ordering by recording when we first enter a declaration’s lifetime, and when we leave it. This gives us two different orderings of the books on the shelf that have a special property that our good friends Tarjan and Vishkin proved is exactly what we need. Here’s our original example again, annotated by lifetime rather than syntax:</p>
 <pre class="language-C"><code class="language-C">{                              // enter root lifetime
     let prodDb: Database;      // enter prodDb lifetime
     {                          // enter users lifetime region
@@ -214,8 +215,8 @@ type Table(db: Database);
 }                              // leave prodDb, then root</code></pre>
 <p>The DFS hands us two shelves:</p>
 <ul>
-<li><strong>pre-order:</strong> <code>prodDb</code>, <code>users</code>, <code>logs</code></li>
-<li><strong>post-order:</strong> <code>users</code>, <code>logs</code>, <code>prodDb</code></li>
+<li><strong>enter order:</strong> <code>root</code>, <code>prodDb</code>, <code>users</code>, <code>logs</code></li>
+<li><strong>leave order:</strong> <code>users</code>, <code>logs</code>, <code>prodDb</code>, <code>root</code></li>
 </ul>
 <img src="/assets/images/thoughtdumps/type-checker/dfs-enter-leave-orders.png" alt="Lifetime tree beside enter and leave order shelves showing the same nodes in their DFS orders." width="720">
 <p>Now the rule. <code>u</code> is available to <code>v</code> if and only if <code>u</code> is entered <em>before</em> <code>v</code> <strong>and</strong> left <em>after</em> <code>v</code>. The intuition is just containment: <code>u</code>’s lifetime opens before <code>v</code> and closes after it, so <code>v</code> lives entirely inside <code>u</code>’s lifetime. <code>prodDb</code> contains both <code>users</code> and <code>logs</code>, but <code>users</code> does not contain <code>logs</code>, so the legal and illegal references fall out of the same check. The nicest part is that we don’t even need to re-compute the orderings at every insertion – we can just maintain them as we go!</p>
@@ -228,8 +229,6 @@ type Table(db: Database);
   <nav class="post-nav">
     
     
-    
-      
     
       
     
