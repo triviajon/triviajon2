@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>thoughtdumps</title>
+    <title>thoughtdumps tagged 'projects'</title>
     <script src="/assets/scripts/openforms-metrics.js"></script>
     <script>
       OpenFormsMetrics.init({
@@ -82,111 +82,28 @@
       </nav>
 
       
-<h1>thoughtdumps</h1>
-<p>essays, notes, and other brain debris.</p>
-
-
+<h1>posts tagged "projects"</h1>
+<p><a href="/thoughtdumps/">&larr; all posts</a></p>
 
 <div class="post-list">
   
-  <a href="/thoughtdumps/oscope64/" class="post-item" data-tags="thoughtdumps,music,projects,web">
-    <div class="post-item-header">
-      <span class="post-item-title">oscope64</span>
-      <span class="post-item-meta">
-        <time>June 7, 2026</time>
-        &middot; 3 min
-      </span>
-    </div>
-    
-    <p class="post-item-desc">a deconstructed oscilloscope for mario 64 ds tracks</p>
-    
-    
-    <div class="post-item-tags">
-      
-        
-      
-        
-        <span class="tag">music</span>
-        
-      
-        
-        <span class="tag">projects</span>
-        
-      
-        
-        <span class="tag">web</span>
-        
-      
-    </div>
-    
-  </a>
   
-  <a href="/thoughtdumps/do-your-own-technical-writing/" class="post-item" data-tags="thoughtdumps,ai,writing">
-    <div class="post-item-header">
-      <span class="post-item-title">own your (technical) writing</span>
-      <span class="post-item-meta">
-        <time>June 1, 2026</time>
-        &middot; 2 min
-      </span>
-    </div>
     
-    <p class="post-item-desc">the case for doing a little more writing</p>
-    
-    
-    <div class="post-item-tags">
+    <a href="/thoughtdumps/oscope64/" class="post-item">
+      <div class="post-item-header">
+        <span class="post-item-title">oscope64</span>
+        <span class="post-item-meta">
+          <time>June 7, 2026</time>
+          &middot; 3 min
+        </span>
+      </div>
       
-        
+      <p class="post-item-desc">a deconstructed oscilloscope for mario 64 ds tracks</p>
       
-        
-        <span class="tag">ai</span>
-        
-      
-        
-        <span class="tag">writing</span>
-        
-      
-    </div>
+    </a>
     
-  </a>
-  
-  <a href="/thoughtdumps/hello-world/" class="post-item" data-tags="thoughtdumps,meta">
-    <div class="post-item-header">
-      <span class="post-item-title">hello world</span>
-      <span class="post-item-meta">
-        <time>March 20, 2026</time>
-        &middot; 1 min
-      </span>
-    </div>
-    
-    <p class="post-item-desc">just another blog</p>
-    
-    
-    <div class="post-item-tags">
-      
-        
-      
-        
-        <span class="tag">meta</span>
-        
-      
-    </div>
-    
-  </a>
   
 </div>
-
-<script>
-function filterPosts(tag) {
-  document.querySelectorAll('#filters button').forEach(b => {
-    b.classList.toggle('active', b.textContent.trim() === tag || (tag === 'all' && b.textContent.trim() === 'all'));
-  });
-  document.querySelectorAll('.post-item').forEach(item => {
-    if (tag === 'all') { item.style.display = ''; return; }
-    const tags = (item.dataset.tags || '').split(',');
-    item.style.display = tags.includes(tag) ? '' : 'none';
-  });
-}
-</script>
 
     </main>
     <footer>
